@@ -13,6 +13,8 @@ public class PrimeFactors
     {
         if (number % 2 == 0)
             return Arrays.asList(2, number / 2);
+        if (number % 3 == 0)
+            return Arrays.asList(3, number / 3);
         return Arrays.asList(number);
     }
 }
