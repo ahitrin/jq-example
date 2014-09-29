@@ -3,15 +3,17 @@ package com.github.ahitrin.jqexample;
 import static org.hamcrest.CoreMatchers.hasItem;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.isIn;
 import static org.hamcrest.core.Every.everyItem;
 import static org.junit.Assume.assumeThat;
 
-import java.util.Arrays;
+import java.math.BigInteger;
 import java.util.List;
 
 import com.pholser.junit.quickcheck.ForAll;
 import com.pholser.junit.quickcheck.generator.InRange;
+import org.hamcrest.BaseMatcher;
+import org.hamcrest.Description;
+import org.hamcrest.Matcher;
 import org.junit.contrib.theories.Theories;
 import org.junit.contrib.theories.Theory;
 import org.junit.runner.RunWith;
@@ -23,10 +25,8 @@ import org.junit.runner.RunWith;
 @RunWith(Theories.class)
 public class PrimeFactorsTest
 {
-    private final List<Integer> firstPrimeNumbers = Arrays.asList(2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47);
-
     @Theory public void primeNumberIsItsOwnFactor(@ForAll @InRange(minInt = 2, maxInt = 500) Integer number) {
-        assumeThat(number, isIn(firstPrimeNumbers));
+        assumeThat(number, isProbablySimple());
 
         List<Integer> factors = PrimeFactors.extract(number);
         assertThat(factors, hasItem(number));
@@ -42,6 +42,25 @@ public class PrimeFactorsTest
 
     @Theory public void everyFactorShouldBeSimple(@ForAll @InRange(minInt = 2, maxInt = 500) Integer number) {
         List<Integer> factors = PrimeFactors.extract(number);
-        assertThat(factors, everyItem(isIn(firstPrimeNumbers)));
+        assertThat(factors, everyItem(isProbablySimple()));
+    }
+
+    private Matcher<Integer> isProbablySimple()
+    {
+        return new BaseMatcher<Integer>()
+        {
+            @Override
+            public boolean matches(Object item)
+            {
+                return (item instanceof Integer) &&
+                    (BigInteger.valueOf((Integer) item).isProbablePrime(5));
+            }
+
+            @Override
+            public void describeTo(Description description)
+            {
+                description.appendText("prime number");
+            }
+        };
     }
 }
