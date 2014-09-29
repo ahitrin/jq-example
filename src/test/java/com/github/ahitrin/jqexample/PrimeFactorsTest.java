@@ -25,14 +25,14 @@ import org.junit.runner.RunWith;
 @RunWith(Theories.class)
 public class PrimeFactorsTest
 {
-    @Theory public void primeNumberIsItsOwnFactor(@ForAll @InRange(minInt = 2, maxInt = 500) Integer number) {
+    @Theory public void primeNumberIsItsOwnFactor(@ForAll @InRange(minInt = 2, maxInt = Integer.MAX_VALUE) Integer number) {
         assumeThat(number, isProbablySimple());
 
         List<Integer> factors = PrimeFactors.extract(number);
         assertThat(factors, hasItem(number));
     }
 
-    @Theory public void productOfFactorsShouldBeEqualToNumber(@ForAll @InRange(minInt = 2, maxInt = 500) Integer number) {
+    @Theory public void productOfFactorsShouldBeEqualToNumber(@ForAll @InRange(minInt = 2, maxInt = Integer.MAX_VALUE) Integer number) {
         List<Integer> factors = PrimeFactors.extract(number);
         Integer product = 1;
         for (Integer factor: factors)
@@ -40,7 +40,7 @@ public class PrimeFactorsTest
         assertThat(product, is(number));
     }
 
-    @Theory public void everyFactorShouldBeSimple(@ForAll @InRange(minInt = 2, maxInt = 500) Integer number) {
+    @Theory public void everyFactorShouldBeSimple(@ForAll @InRange(minInt = 2, maxInt = Integer.MAX_VALUE) Integer number) {
         List<Integer> factors = PrimeFactors.extract(number);
         assertThat(factors, everyItem(isProbablySimple()));
     }
