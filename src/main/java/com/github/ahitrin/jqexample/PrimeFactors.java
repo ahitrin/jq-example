@@ -1,6 +1,6 @@
 package com.github.ahitrin.jqexample;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -11,10 +11,14 @@ public class PrimeFactors
 {
     public static List<Integer> extract(Integer number)
     {
-        if (number % 2 == 0)
-            return Arrays.asList(2, number / 2);
-        if (number % 3 == 0)
-            return Arrays.asList(3, number / 3);
-        return Arrays.asList(number);
+        List<Integer> factors = new ArrayList<>();
+        for (int divisor = 2; divisor <=7; divisor++) {
+            while ((number > divisor) && (number % divisor == 0)) {
+                factors.add(divisor);
+                number = number / divisor;
+            }
+        }
+        factors.add(number);
+        return factors;
     }
 }
