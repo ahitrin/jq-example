@@ -25,14 +25,14 @@ public class PrimeFactorsTest
 {
     private final List<Integer> firstPrimeNumbers = Arrays.asList(2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47);
 
-    @Theory public void primeNumberIsItsOwnFactor(@ForAll @InRange(minInt = 2, maxInt = 50) Integer number) {
+    @Theory public void primeNumberIsItsOwnFactor(@ForAll @InRange(minInt = 2, maxInt = 500) Integer number) {
         assumeThat(number, isIn(firstPrimeNumbers));
 
         List<Integer> factors = PrimeFactors.extract(number);
         assertThat(factors, hasItem(number));
     }
 
-    @Theory public void productOfFactorsShouldBeEqualToNumber(@ForAll @InRange(minInt = 2, maxInt = 50) Integer number) {
+    @Theory public void productOfFactorsShouldBeEqualToNumber(@ForAll @InRange(minInt = 2, maxInt = 500) Integer number) {
         List<Integer> factors = PrimeFactors.extract(number);
         Integer product = 1;
         for (Integer factor: factors)
@@ -40,7 +40,7 @@ public class PrimeFactorsTest
         assertThat(product, is(number));
     }
 
-    @Theory public void everyFactorShouldBeSimple(@ForAll @InRange(minInt = 2, maxInt = 50) Integer number) {
+    @Theory public void everyFactorShouldBeSimple(@ForAll @InRange(minInt = 2, maxInt = 500) Integer number) {
         List<Integer> factors = PrimeFactors.extract(number);
         assertThat(factors, everyItem(isIn(firstPrimeNumbers)));
     }
