@@ -45,6 +45,10 @@ public class PrimeFactorsTest
         assertThat(factors, everyItem(isProbablySimple()));
     }
 
+    @Theory public void everyFactorShouldBeSimpleEspeciallyForSmallNumbers(@ForAll @InRange(minInt = 2, maxInt = 200) Integer number) {
+        everyFactorShouldBeSimple(number);
+    }
+
     private Matcher<Integer> isProbablySimple()
     {
         return new BaseMatcher<Integer>()

@@ -13,7 +13,7 @@ public class PrimeFactors
     public static List<Integer> extract(Integer number)
     {
         List<Integer> factors = new ArrayList<>();
-        for (int divisor = 2; divisor < Math.sqrt(number) - 2; divisor++) {
+        for (int divisor = 2; divisor <= Math.sqrt(number); divisor++) {
             while ((number > divisor) && (number % divisor == 0)) {
                 factors.add(divisor);
                 number = number / divisor;
