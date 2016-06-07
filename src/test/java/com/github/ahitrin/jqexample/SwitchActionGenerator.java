@@ -15,10 +15,16 @@ public class SwitchActionGenerator extends Generator<SwitchAction> {
 
     @Override
     public SwitchAction generate(SourceOfRandomness random, GenerationStatus status) {
+        boolean nextState = random.nextBoolean();
         return new SwitchAction() {
             @Override
             public void apply(LightSwitch lightSwitch) {
-                lightSwitch.switchLight(random.nextBoolean());
+                lightSwitch.switchLight(nextState);
+            }
+
+            @Override
+            public String toString() {
+                return "-> " + nextState;
             }
         };
     }
