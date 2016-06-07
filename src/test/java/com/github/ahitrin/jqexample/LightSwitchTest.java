@@ -2,9 +2,11 @@ package com.github.ahitrin.jqexample;
 
 import com.pholser.junit.quickcheck.Property;
 import com.pholser.junit.quickcheck.runner.JUnitQuickcheck;
+import java.util.List;
 import org.junit.runner.RunWith;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assume.assumeTrue;
 
 /**
  * @author Andrey Hitrin
@@ -12,9 +14,18 @@ import static org.junit.Assert.assertEquals;
  */
 @RunWith(JUnitQuickcheck.class)
 public class LightSwitchTest {
-    @Property public void allOK(boolean state) {
+    @Property public void singleSwitchWorksFine(boolean state) {
         LightSwitch aSwitch = new LightSwitch();
         aSwitch.switchLight(state);
         assertEquals(state, aSwitch.hasLight());
+    }
+
+    @Property public void onlyTheLastSwitchHasEffect(List<Boolean> sequence) {
+        assumeTrue(sequence.size() > 0);
+        final LightSwitch lightSwitch = new LightSwitch();
+        for (boolean state: sequence) {
+            lightSwitch.switchLight(state);
+        }
+        assertEquals(sequence.get(sequence.size() - 1), lightSwitch.hasLight());
     }
 }
