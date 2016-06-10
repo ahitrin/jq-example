@@ -1,16 +1,9 @@
 package com.github.ahitrin.jqexample;
 
-import static org.hamcrest.CoreMatchers.hasItem;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.is;
-import static org.hamcrest.core.Every.everyItem;
-import static org.junit.Assume.assumeThat;
-
-import java.math.BigInteger;
-import java.util.List;
-
 import com.pholser.junit.quickcheck.ForAll;
 import com.pholser.junit.quickcheck.generator.InRange;
+import java.math.BigInteger;
+import java.util.List;
 import org.hamcrest.BaseMatcher;
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
@@ -18,11 +11,19 @@ import org.junit.contrib.theories.Theories;
 import org.junit.contrib.theories.Theory;
 import org.junit.runner.RunWith;
 
+import static org.hamcrest.CoreMatchers.hasItem;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.core.Every.everyItem;
+import static org.junit.Assume.assumeThat;
+
 /**
+ * @deprecated This example uses <b>old version of JUnit-QuickCheck</b>. Please take a look at the newer example, {@link LightSwitchTest}
  * @author Andrey Hitrin
  * @since 25.09.14
  */
 @RunWith(Theories.class)
+@Deprecated
 public class PrimeFactorsTest
 {
     @Theory public void primeNumberIsItsOwnFactor(@ForAll @InRange(minInt = 2, maxInt = Integer.MAX_VALUE) Integer number) {
