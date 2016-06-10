@@ -8,7 +8,6 @@ import org.junit.Ignore;
 import org.junit.runner.RunWith;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 import static org.junit.Assume.assumeTrue;
 
 /**
@@ -35,7 +34,8 @@ public class LightSwitchTest {
 
     @Property public void singleSwitchWithGeneratorsWorksFine(@From(SwitchActionGenerator.class) SwitchAction action) {
         LightSwitch lightSwitch = new LightSwitch();
-        action.apply(lightSwitch);
-        assertTrue(lightSwitch.hasLight());
+        LightSwitchModel model = new LightSwitchModel();
+        action.apply(lightSwitch, model);
+        assertEquals(lightSwitch.hasLight(), model.hasLight);
     }
 }

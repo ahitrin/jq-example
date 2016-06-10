@@ -5,5 +5,5 @@ package com.github.ahitrin.jqexample;
  * @since 07.06.16
  */
 public interface SwitchAction {
-    void apply(LightSwitch lightSwitch);
+    void apply(LightSwitch lightSwitch, LightSwitchModel model);
 }

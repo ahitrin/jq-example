@@ -18,8 +18,9 @@ public class SwitchActionGenerator extends Generator<SwitchAction> {
         final boolean nextState = random.nextBoolean();
         return new SwitchAction() {
             @Override
-            public void apply(LightSwitch lightSwitch) {
+            public void apply(LightSwitch lightSwitch, LightSwitchModel model) {
                 lightSwitch.switchLight(nextState);
+                model.hasLight = nextState;
             }
 
             @Override
