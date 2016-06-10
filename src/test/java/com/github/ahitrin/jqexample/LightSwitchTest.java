@@ -4,7 +4,6 @@ import com.pholser.junit.quickcheck.From;
 import com.pholser.junit.quickcheck.Property;
 import com.pholser.junit.quickcheck.runner.JUnitQuickcheck;
 import java.util.List;
-import org.junit.Ignore;
 import org.junit.runner.RunWith;
 
 import static org.junit.Assert.assertEquals;
@@ -22,13 +21,10 @@ public class LightSwitchTest {
         assertEquals(state, aSwitch.hasLight());
     }
 
-    @Ignore("broken for now")
     @Property public void onlyTheLastSwitchHasEffect(List<Boolean> sequence) {
         assumeTrue(sequence.size() > 0);
         final LightSwitch lightSwitch = new LightSwitch();
-        for (boolean state: sequence) {
-            lightSwitch.switchLight(state);
-        }
+        sequence.forEach(state -> lightSwitch.switchLight(state));
         assertEquals(sequence.get(sequence.size() - 1), lightSwitch.hasLight());
     }
 
@@ -37,5 +33,13 @@ public class LightSwitchTest {
         LightSwitchModel model = new LightSwitchModel();
         action.apply(lightSwitch, model);
         assertEquals(lightSwitch.hasLight(), model.hasLight);
+    }
+
+    @Property public void onlyTheLastActionHasEffectWithGenerator(List<@From(SwitchActionGenerator.class) SwitchAction> sequence) {
+        assumeTrue(sequence.size() > 0);
+        final LightSwitch lightSwitch = new LightSwitch();
+        final LightSwitchModel model = new LightSwitchModel();
+        sequence.forEach(action -> action.apply(lightSwitch, model));
+        assertEquals(model.hasLight, lightSwitch.hasLight());
     }
 }
